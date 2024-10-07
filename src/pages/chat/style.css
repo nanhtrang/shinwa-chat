@@ -20,6 +20,7 @@
   cursor: pointer;
   transition: all ease 0.3s;
 }
+
 .toolbar-icon svg {
   transition: all ease 0.3s;
 }
@@ -44,11 +45,13 @@
   transition: all ease 0.3s;
   cursor: pointer;
 }
+
 .chat-recent-detail:hover {
-  background-color: rgba(240, 240, 240, 0.3);
+  background-color: rgba(240, 240, 240, 1);
 }
+
 .chat-recent-detail.active {
-  background-color: #f0f0f0;
+  background-color: #c9c8c8;
 }
 
 .chat-window {
@@ -80,9 +83,11 @@
   background-color: #f0f0f0;
   font-size: 14px;
 }
+
 .type-bot {
   justify-content: start;
 }
+
 .type-user {
   justify-content: end;
 }
@@ -102,7 +107,7 @@
   box-shadow: 10px 10px 20px rgba(43, 21, 149, 0.63);
   position: relative;
   margin: auto;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,7 +122,7 @@
   background-color: #401a77;
   margin: auto 0.75em;
   box-shadow: 5px 5px 5px #1e0660 inset;
-  
+
   animation: bounce 0.6s infinite;
   animation-timing-function: ease-in-out;
   animation-direction: alternate;
@@ -127,6 +132,7 @@
 .typing span:nth-child(2) {
   animation-delay: 0.25s;
 }
+
 .typing span:last-child {
   animation-delay: 0.5s;
 }
@@ -136,19 +142,19 @@
   0% {
     margin-bottom: 1.5em;
   }
-  
+
   25% {
     margin-bottom: 2.5em;
   }
-  
+
   50% {
     margin-bottom: 3.5em;
   }
-  
+
   75% {
     margin-bottom: 4.5em;
   }
-  
+
   100% {
     margin-bottom: 5em;
   }
@@ -169,4 +175,9 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.modal-dialog {
+  width: 70% ;
+  min-width: 70%;
 }

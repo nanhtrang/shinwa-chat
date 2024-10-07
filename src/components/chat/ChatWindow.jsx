@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react"
 import { BsTable } from "react-icons/bs"
 import { IoIosSend } from "react-icons/io"
 import { json } from "react-router-dom"
+import EditorModal from "./EditorModal"
 
-const ChatWindowControl = ({ handleSend, text, setText }) => {
+const ChatWindowControl = ({ handleSend, text, setText, createTable }) => {
 
   const handleInputChange = (e) => {
     setText(e.target.value)
@@ -18,7 +19,7 @@ const ChatWindowControl = ({ handleSend, text, setText }) => {
     <>
       <div className="d-flex align-items-center justify-content-center mt-auto pb-3 bg-white">
         <div className="mx-2 d-flex align-items-center">
-          <BsTable className="c-pointer" size={20} />
+          <BsTable className="c-pointer" onClick={createTable} size={20} />
         </div>
         <div className="input-text px-2">
           <input onKeyDown={handleKeydown} type="text" value={text} onChange={(e) => { handleInputChange(e) }} placeholder="aA" />
@@ -55,15 +56,21 @@ function ChatWindow() {
   const [message, setMessage] = useState('');   // State to hold the current message
   const [chat, setChat] = useState([]);
   const [isUserTurn, setUserTurn] = useState(true)
-  const chatBoxRef = useRef(null); 
+  const chatBoxRef = useRef(null);
+  const [showModalCreateTable, setShowModalCreateTable] = useState(false)
   const handleSend = () => {
     console.log(message);
     setChat([...chat, {
       type: TURN.USER,
       text: message
     }])
-    setMessage("")    
+    setMessage("")
     setUserTurn(true)
+  }
+
+  const handleSaveTable = (value) => {
+    console.log(value);
+    
   }
 
   useEffect(() => {
@@ -82,7 +89,7 @@ function ChatWindow() {
           type: TURN.BOT,
           text: "bot rep here, this is a message from bot"
         }])
-        
+
       }, 1000);
       setUserTurn(false)
     }
@@ -109,7 +116,8 @@ function ChatWindow() {
               </div>
             </div> */}
           </div>
-          <ChatWindowControl text={message} setText={setMessage} handleSend={handleSend} />
+          <ChatWindowControl createTable={() => {setShowModalCreateTable(true)}} text={message} setText={setMessage} handleSend={handleSend} />
+          <EditorModal show={showModalCreateTable} setShow={setShowModalCreateTable} richTextValue={handleSaveTable}/>
         </div>
       </div>
     </>
