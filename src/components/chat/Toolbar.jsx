@@ -1,18 +1,14 @@
-import { Button } from "react-bootstrap"
 import { IoArrowBack } from "react-icons/io5"
+import { Link } from "react-router-dom"
 
 function Toolbar() {
   return (
     <>
       <div className="mx-2" style={{ minWidth: "50px" }}>
         <div>
-          <div className="rounded p-2 ms-2 toolbar-icon">
-            <IoArrowBack />
-          </div>
-
-          {/* <div className="rounded p-2 ms-2 toolbar-icon">
-            <IoArrowBack />
-          </div> */}
+          <Link to='/' className="rounded p-2 ms-2 toolbar-icon">
+            <IoArrowBack color="black" />
+          </Link>
         </div>
       </div>
     </>

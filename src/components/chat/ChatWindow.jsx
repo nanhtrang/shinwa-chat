@@ -8,9 +8,10 @@ const ChatWindowControl = ({ handleSend, text, setText, createInitTable }) => {
   const tbl2 = `<table style="border-collapse: collapse; width: 45.2904%;" border="1"><colgroup><col style="width: 17.5347%;"><col style="width: 12.6622%;"><col style="width: 12.685%;"><col style="width: 57.1181%;"></colgroup> <tbody> <tr> <td><strong>番号順</strong></td> <td style="text-align: center;"><strong>名前</strong></td> <td style="text-align: center;"><strong>生年</strong></td> <td style="text-align: center;"><strong>住所</strong></td> </tr> <tr> <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> </tr> <tr> <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> <td>&nbsp;</td> </tr> </tbody> </table>`
   const tbl3 = `<table style="border-collapse: collapse; width: 47.4097%;" border="1"><colgroup><col style="width: 20.2322%;"><col style="width: 26.6998%;"><col style="width: 26.534%;"><col style="width: 26.534%;"></colgroup> <tbody> <tr> <td style="text-align: center;"><strong>名前</strong></td> <td style="text-align: center;"><strong>生年</strong></td> <td style="text-align: center;"><strong>住所</strong></td> <td style="text-align: center;"><strong>電話番号</strong></td> </tr> <tr> <td style="text-align: center;">&nbsp;</td> <td style="text-align: center;">&nbsp;</td> <td style="text-align: center;">&nbsp;</td> <td style="text-align: center;">0987654321</td> </tr> <tr> <td style="text-align: center;">&nbsp;</td> <td style="text-align: center;">&nbsp;</td> <td style="text-align: center;">&nbsp;</td> <td style="text-align: center;">0123456789</td> </tr> </tbody> </table>`
   const [table, setTable] = useState([
-    { name: 'table1', content: tbl1 },
-    { name: 'table2', content: tbl2 },
-    { name: 'table3', content: tbl3 },
+    { name: '表1', content: tbl1 },
+    { name: '表2', content: tbl2 },
+    { name: '表3', content: tbl3 },
+    { name: 'テーブルを作成する', content: tbl3 },
   ])
 
   const handleInputChange = (e) => {
@@ -64,10 +65,24 @@ const ChatMessage = (props) => {
   )
 }
 
+const ChatToolTip = () => {
+  return (
+    <>
+      <div className="p-absolute chat-tooltip">
+        test tool tip
+      </div>
+    </>
+  )
+}
+
 function ChatWindow() {
   const TURN = {
     BOT: "type-bot",
     USER: "type-user",
+  }
+  const MESSAGE_TYPE = {
+    TEXT: "TEXT",
+    TABLE: "TABLE",
   }
   const [message, setMessage] = useState('');   // State to hold the current message
   const [chat, setChat] = useState([]);
@@ -78,7 +93,8 @@ function ChatWindow() {
   const handleSend = () => {
     console.log(message);
     setChat([...chat, {
-      type: TURN.USER,
+      turn: TURN.USER,
+      type: MESSAGE_TYPE.TEXT,
       text: message
     }])
     setMessage("")
@@ -86,7 +102,19 @@ function ChatWindow() {
   }
 
   const handleSaveTable = (value) => {
-    setInitialText(value)
+    if (value.trim() === "") {
+      setShowModalCreateTable(false)
+      return
+    }
+    const regexPattern = /(<table style="border-collapse: collapse; width: )[\d\.]+\s*%/gi
+    const newValue = value.replaceAll(regexPattern, '$1100%')
+    setChat([...chat, {
+      turn: TURN.USER,
+      type: MESSAGE_TYPE.TABLE,
+      text: newValue
+    }])
+    setShowModalCreateTable(false)
+    setUserTurn(true)
   }
 
   const createInitTable = (value) => {
@@ -107,7 +135,8 @@ function ChatWindow() {
     if (isUserTurn === true) {
       setTimeout(() => {
         setChat([...chat, {
-          type: TURN.BOT,
+          turn: TURN.BOT,
+          type: MESSAGE_TYPE.TEXT,
           text: "bot rep here, this is a message from bot"
         }])
 
@@ -121,10 +150,18 @@ function ChatWindow() {
         <div className="d-flex flex-column h-100">
           <div className="chat-box scroll px-4 overflow-auto" ref={chatBoxRef}>
             {chat.map((item, index) => (
-              <div key={index} className={`d-flex my-2 chat-message-container ${item.type}`}>
-                <div className="chat-message p-2 px-3">
+              <div key={index} className={`d-flex my-2 chat-message-container ${item.turn}`}>
+                
+                {item.type === MESSAGE_TYPE.TABLE && (
+                  <div className="chat-message chat-message-with-table p-2 px-3">
+                  <div dangerouslySetInnerHTML={{ __html: item.text }}></div>
+                  </div>
+                )}
+                {item.type === MESSAGE_TYPE.TEXT && (
+                  <div className="chat-message p-2 px-3">
                   {item.text}
-                </div>
+                  </div>
+                )}
               </div>
             ))}
 

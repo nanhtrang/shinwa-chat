@@ -37,7 +37,7 @@ function RecentChat() {
   return (
     <>
       <div className="rounded bg-white recent-chat mx-2">
-        <div className="fs-4 fw-bold mx-2 mb-3 p-2"> Recent Chats</div>
+        <div className="fs-4 fw-bold mx-2 mb-3 p-2">最近のチャット</div>
         <div className="scroll recent-chat-detail-container px-2">
           {data.map((item, index) => (
             <div key={index}>
