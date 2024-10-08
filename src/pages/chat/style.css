@@ -25,13 +25,8 @@
   transition: all ease 0.3s;
 }
 
-.toolbar-icon.active {
+.toolbar-icon:hover {
   background-color: #e7e7e7;
-}
-
-.toolbar-icon.active:hover svg {
-  color: black;
-  scale: 1.2;
 }
 
 .text-message {
@@ -181,3 +176,33 @@
   width: 70% ;
   min-width: 70%;
 }
+
+.create-tbl-dropdown {
+  position: absolute;
+  bottom: unset;
+  top: 145px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 0px;
+  transition: all ease 0.5s;
+  opacity: 0;
+}
+#icon-tbl-container {
+  position: relative;
+  display: inline-block;
+}
+
+#icon-tbl-container:hover .create-tbl-dropdown{
+  bottom: 32px;
+  top: unset;
+  max-height: 500px;
+  opacity: 1;
+}
+.option-tbl {
+  transition: all ease 0.3s;
+}
+.option-tbl:hover{
+  background-color: #e7e7e7;
+  cursor: pointer;
+}
+

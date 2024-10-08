@@ -6,7 +6,7 @@ function Toolbar() {
     <>
       <div className="mx-2" style={{ minWidth: "50px" }}>
         <div>
-          <div className="rounded p-2 ms-2 toolbar-icon active">
+          <div className="rounded p-2 ms-2 toolbar-icon">
             <IoArrowBack />
           </div>
 

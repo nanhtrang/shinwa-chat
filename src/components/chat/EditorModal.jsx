@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Button, Modal } from "react-bootstrap";
 // import "./ja.js"
 
-function EditorModal({show, setShow, richTextValue}) {
+function EditorModal({show, setShow, richTextValue, initialValue}) {
   const editorRef = useRef(null);
   const apiKey = import.meta.env.VITE_TINYMCE_KEY;
   const lang = import.meta.env.VITE_TINYMCE_LANG;
@@ -21,7 +21,7 @@ function EditorModal({show, setShow, richTextValue}) {
   return (
     <>
       <Modal show={show}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>テーブルを作成する</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -29,13 +29,13 @@ function EditorModal({show, setShow, richTextValue}) {
           <Editor
             apiKey={apiKey}
             onInit={(_evt, editor) => editorRef.current = editor}
-            initialValue=""
+            initialValue={initialValue}
             init={{
               height: 470,
-              language: { lang },
+              language: lang,
               menubar: false,
-              plugins: 'preview importcss searchreplace autosave save directionality fullscreen table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
-              toolbar: "undo redo | table fullscreen preview | fontfamily fontsize | bold italic underline strikethrough forecolor | align  ",
+              plugins: 'preview code codesample  importcss searchreplace autosave save directionality fullscreen table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+              toolbar: "undo redo code | table fullscreen preview | fontfamily fontsize | bold italic underline strikethrough forecolor | align  ",
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
           />
