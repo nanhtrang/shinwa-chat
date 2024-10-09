@@ -45,3 +45,7 @@ body {
 .p-absolute {
   position: absolute;
 }
+
+.bg-secondary-1 {
+  background-color: #f0f0f0 !important;
+}
