@@ -1,3 +1,41 @@
 input[type=checkbox] {
   margin: 4px;
 }
+
+
+.custom-select-box {
+  width: 300px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.selected-options {
+  margin-bottom: 10px;
+}
+
+.selected-option {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f1f1f1;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.selected-option button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.options-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.option-item {
+  display: block;
+  padding: 5px;
+}

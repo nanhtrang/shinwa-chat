@@ -6,7 +6,7 @@ import "./style.css"
 import ModalCreateNewChat from "../../components/newChat/ModalCreateNewChat"
 
 function Chat() {
-  const [showModalCreateChat, setShowModalCreateTable] = useState(false)
+  const [showModalCreateChat, setShowModalCreateTable] = useState(true)
   const createNewChat = () => {
     
   }

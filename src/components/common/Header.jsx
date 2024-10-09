@@ -3,7 +3,7 @@ import { IoChatbubble } from "react-icons/io5"
 function Header() {
   return (
     <>
-      <div className="p-2 px-3 bg-white d-flex align-items-center shadow-bottom" style={{minHeight: "56px"}}>
+      <div className="p-2 px-3 bg-primary-1 text-white d-flex align-items-center shadow-bottom" style={{minHeight: "56px"}}>
         <div className="d-flex">
           <div className="me-2 d-flex align-items-center">
             <IoChatbubble size={22} />
