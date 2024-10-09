@@ -8,6 +8,9 @@ body {
   box-shadow: 0 2px 4px -2px rgb(179, 179, 179);
 }
 
+.scroll {
+  position: relative;
+}
 
 .scroll::-webkit-scrollbar-track {
   border-radius: 10px;
@@ -19,6 +22,8 @@ body {
   width: 8px;
   background-color: transparent;
   transition: all ease 0.3s !important;
+  position: absolute;
+  right: 0;
 }
 
 .scroll::-webkit-scrollbar-thumb {
@@ -55,4 +60,25 @@ body {
 
 .bg-primary-1 {
   background-color: #2b80ff !important
+}
+
+.logo-box {
+  border-right: 1px solid rgb(219, 234, 254);
+  padding: 16px 24px;
+}
+
+.header-box {
+  border-bottom: 1px solid rgb(219, 234, 254);
+}
+
+.text-black-light {
+  color: rgb(100, 116, 139);
+}
+
+.ant-btn-primary span {
+  color: white !important;
+}
+
+.ant-select-item-option-state {
+  display: none !important;
 }

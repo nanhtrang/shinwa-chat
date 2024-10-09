@@ -1,55 +1,42 @@
-import { useState } from "react";
+import { Select, Space } from "antd";
+import { LiaTimesSolid } from "react-icons/lia";
 
-const optionsData = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-];
 
-function SelectInput() {
-  const [options, setOptions] = useState(optionsData); // Static list of options
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
-  // Handle checkbox change to add/remove items
-  const handleCheckboxChange = (option) => {
-    if (selectedOptions.some(selected => selected.value === option.value)) {
-      // Remove option if already selected
-      setSelectedOptions(selectedOptions.filter(selected => selected.value !== option.value));
-    } else {
-      // Add option if not selected
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
-
+function SelectInput({ removeOption, options, value, setValue }) {
   // Remove option from selected list
-  const handleRemoveOption = (optionToRemove) => {
-    setSelectedOptions(selectedOptions.filter(option => option.value !== optionToRemove.value));
+  const handleChange = (value) => {
+    debugger
+    setValue(...value)
+
   };
+  const { Option } = Select;
 
   return (
-    <div className="custom-select-box">
-      <div className="selected-options">
-        {selectedOptions.map(option => (
-          <div key={option.value} className="selected-option">
-            <span>{option.label}</span>
-            <button onClick={() => handleRemoveOption(option)}>&times;</button>
+    <Select
+      mode="multiple"
+      style={{
+        width: '100%',
+      }}
+      placeholder="select one country"
+      defaultValue={['china']}
+      onChange={handleChange}
+      value={value}
+    >
+      {options.map((option, index) => (
+        <option key={index} value={option.value}>
+          <div className="my-1 d-flex justify-content-between" onClick={() => { handleChange(option.value) }}>
+            <div className="flex-grow-1">
+              {option.emoji}
+            </div>
+            <div>
+              <LiaTimesSolid onClick={() => { removeOption(option.value) }} />
+            </div>
           </div>
-        ))}
-      </div>
+        </option>
+      ))}
 
-      <div className="options-list">
-        {options.map(option => (
-          <label key={option.value} className="option-item">
-            <input
-              type="checkbox"
-              checked={selectedOptions.some(selected => selected.value === option.value)}
-              onChange={() => handleCheckboxChange(option)}
-            />
-            {option.label}
-          </label>
-        ))}
-      </div>
-    </div>
+    </Select>
   );
 }
 

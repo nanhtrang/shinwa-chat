@@ -1,10 +1,11 @@
+import { FaPlus } from "react-icons/fa6"
 import { FiEdit } from "react-icons/fi"
 
 function ChatRencentDetail(prop) {
   const { date, time, text, active } = prop
   return (
     <>
-      <div className={`p-2 chat-recent-detail rounded mb-2 ${active ? 'active' : ''}`}>
+      <div className={`chat-recent-detail ${active ? 'active' : ''}`}>
         <div className="d-flex justify-content-between">
           <div className="date">
             {date}
@@ -38,16 +39,16 @@ function RecentChat({createNewChat}) {
 
   return (
     <>
-      <div className="rounded bg-white recent-chat mx-2 ms-3">
-        <div className=" mx-2 mb-3 p-2 d-flex justify-content-between">
-          <div className="fs-4 fw-bold">
+      <div className=" bg-white recent-chat">
+        <div className="d-flex justify-content-between recent-chat-title">
+          <div className="fw-bold recent-chat-title-text">
             最近のチャット
           </div>
-          <div onClick={createNewChat} className="icon-create-new rounded-circle d-flex justify-content-center align-items-center c-pointer" style={{ width: "36px", height: "36px" }} >
-            <FiEdit size={20} />
+          <div onClick={createNewChat} className="icon-create-new rounded px-1 d-flex justify-content-center align-items-center c-pointer">
+            <FaPlus size={12} className="me-2"/> <span>新しい</span>
           </div>
         </div>
-        <div className="scroll recent-chat-detail-container px-2">
+        <div className="scroll recent-chat-detail-container">
           {data.map((item, index) => (
             <div key={index}>
               <ChatRencentDetail date={item.date} text={item.text} time={item.time} active={item.active} />

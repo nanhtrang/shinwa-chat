@@ -1,86 +1,107 @@
-import { useEffect, useRef, useState } from "react"
-import { Button, Form, InputGroup, Modal } from "react-bootstrap"
+import { useEffect, useState } from "react"
 import "./style.css"
 import SelectInput from "../common/SelectInput"
-import Select, { components } from 'react-select';
+import { Checkbox, Modal } from "antd";
 
-const CheckboxOption = ({ option }) => {
-  return (
-    <>
-      <div className="d-flex my-2">
-        <input id={option} className="me-2" type="checkbox" />
-        <label htmlFor={option}>{option}</label>
-      </div>
-    </>
-  )
-}
-
-const MultiValueRemove = (props) => {
-  return (
-    <components.MultiValueRemove {...props}>
-      <span>&times;</span>
-    </components.MultiValueRemove>
-  );
-};
 
 function ModalCreateNewChat({ show, setShow, createChat }) {
-  const btnStartRef = useRef(null)
-  const btnCancelRef = useRef(null)
   const [listCheckbox, setListCheckbox] = useState([
     ["技術連絡メモ", "業務連絡メ"],
     ["WMS", "TMS", "TS", "QS"],
     ["新規", "修正/改訂", "修正"]
   ])
 
+  const [options, setOptions] = useState([
+    {
+      label: 'China',
+      value: 'china',
+      emoji: '🇨🇳',
+      desc: 'China (中国)',
+    },
+    {
+      label: 'USA',
+      value: 'usa',
+      emoji: '🇺🇸',
+      desc: 'USA (美国)',
+    },
+    {
+      label: 'Japan',
+      value: 'japan',
+      emoji: '🇯🇵',
+      desc: 'Japan (日本)',
+    },
+    {
+      label: 'Korea',
+      value: 'korea',
+      emoji: '🇰🇷',
+      desc: 'Korea (韩国)',
+    },
+  ]);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const removeOption = (value) => {
+    const tmp = [...options]
+    let index = -1
+    for (let i = 0; i < tmp.length; i++) {
+      const el = tmp[i];
+      if (el.value === value) {
+        index = i
+        break
+      }
+      
+    }
+    debugger
+    if (index !== -1) {
+      tmp.splice(index, 1);
+      setOptions([...tmp])
+    }
+  }
 
   useEffect(() => {
     if (show) {
-      btnCancelRef.current.style.width = `${btnStartRef.current.offsetWidth}px`
+      // btnCancelRef.current.style.width = `${btnStartRef.current.offsetWidth}px`
     }
   }, [show])
   return (
     <>
-      <Modal show={show}>
-        <Modal.Header>
-          <Modal.Title>新しいチャットを作成</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="row">
-            {listCheckbox.map((element, index) => (
-              <div key={index} className="col-sm-4 d-flex justify-content-center">
+      <Modal
+        title="新しいチャットを作成"
+        open={show}
+        onOk={createChat}
+        onCancel={() => { setShow(false) }}
+        okText="チャットを開始"
+        cancelText="キャンセル"
+        >
+        {JSON.stringify(options)}
+        <div className="row">
+          {listCheckbox.map((element, index) => (
+            <div key={index} className="col-sm-4 d-flex justify-content-center">
+              <div>
                 <div>
-                  <div>
-                    選択
-                  </div>
+                  選択
+                </div>
+                <div>
                   {element.map((el, idex) => (
-                    <CheckboxOption key={idex} option={el} />
+                    <div key={idex}>
+                      <Checkbox >{el}</Checkbox>
+                    </div>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-          <div className="row">
-            <div className="d-flex align-items-center">
-              <div className="me-2">
-                グループ
-              </div>
-              <div>
-               <SelectInput/>
-              </div>
+            </div>
+          ))}
+        </div>
+        <div className="row mt-4">
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="me-2">
+              グループ
+            </div>
+            <div style={{width: "60%"}}>
+              <SelectInput value={selectedOptions} setValue={setSelectedOptions} options={options} removeOption={removeOption} />
             </div>
           </div>
-          <div className="row my-3">
-            <div className="d-inline-flex justify-content-center">
-              <Button ref={btnStartRef} className="mx-2" variant="primary" onClick={createChat}>
-                チャットを開始
-              </Button>
-              <Button ref={btnCancelRef} className="mx-2" variant="secondary" onClick={() => { setShow(false) }}>
-                キャンセル
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
+        </div>
       </Modal>
     </>
   )

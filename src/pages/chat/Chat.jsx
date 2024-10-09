@@ -6,13 +6,13 @@ import "./style.css"
 import ModalCreateNewChat from "../../components/newChat/ModalCreateNewChat"
 
 function Chat() {
-  const [showModalCreateChat, setShowModalCreateTable] = useState(true)
+  const [showModalCreateChat, setShowModalCreateTable] = useState(false)
   const createNewChat = () => {
     
   }
   return (
     <>
-      <div className="d-flex my-3 chat-page">
+      <div className="d-flex chat-page">
         {/* <Toolbar /> */}
         <RecentChat createNewChat={() => {setShowModalCreateTable(true)}} />
         <ChatWindow />
