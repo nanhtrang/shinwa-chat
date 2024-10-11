@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import "./style.css"
-import SelectInput from "../common/SelectInput"
-import { Checkbox, Modal } from "antd";
+import { Checkbox, Input, Modal, Select } from "antd";
 
 
 function ModalCreateNewChat({ show, setShow, createChat }) {
@@ -49,9 +48,8 @@ function ModalCreateNewChat({ show, setShow, createChat }) {
         index = i
         break
       }
-      
+
     }
-    debugger
     if (index !== -1) {
       tmp.splice(index, 1);
       setOptions([...tmp])
@@ -72,8 +70,7 @@ function ModalCreateNewChat({ show, setShow, createChat }) {
         onCancel={() => { setShow(false) }}
         okText="チャットを開始"
         cancelText="キャンセル"
-        >
-        {JSON.stringify(options)}
+      >
         <div className="row">
           {listCheckbox.map((element, index) => (
             <div key={index} className="col-sm-4 d-flex justify-content-center">
@@ -97,8 +94,27 @@ function ModalCreateNewChat({ show, setShow, createChat }) {
             <div className="me-2">
               グループ
             </div>
-            <div style={{width: "60%"}}>
-              <SelectInput value={selectedOptions} setValue={setSelectedOptions} options={options} removeOption={removeOption} />
+            <div style={{ width: "60%" }}>
+              <Select
+                defaultValue="lucy"
+                style={{ width: "100%" }}
+                // onChange={handleChange}
+                options={[
+                  { value: 'jack', label: 'Jack' },
+                  { value: 'lucy', label: 'Lucy' },
+                  { value: 'Yiminghe', label: 'yiminghe' },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row my-4">
+          <div className="d-flex align-items-center justify-content-center">
+            <div className="me-2">
+              参考技連
+            </div>
+            <div style={{ width: "60%" }}>
+              <Input />
             </div>
           </div>
         </div>

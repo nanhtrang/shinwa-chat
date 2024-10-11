@@ -19,7 +19,8 @@ body {
 }
 
 .scroll::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
   background-color: transparent;
   transition: all ease 0.3s !important;
   position: absolute;
@@ -55,9 +56,6 @@ body {
   background-color: #f0f0f0 !important;
 }
 
-.modal{
-}
-
 .bg-primary-1 {
   background-color: #2b80ff !important
 }
@@ -81,4 +79,12 @@ body {
 
 .ant-select-item-option-state {
   display: none !important;
+}
+
+.ant-spin-dot-item {
+  background-color: #2b80ff !important;
+}
+
+.spin svg{
+  fill: #2b80ff !important;
 }
