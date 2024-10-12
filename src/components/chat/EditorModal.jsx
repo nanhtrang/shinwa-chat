@@ -13,7 +13,7 @@ function EditorModal({ show, setShow, richTextValue, initialValue }) {
 
   const saveChange = () => {
     if (editorRef.current) {
-      richTextValue(editorRef.current.getContent())
+      richTextValue(editorRef.current.currentContent)
     }
   }
 
@@ -39,6 +39,7 @@ function EditorModal({ show, setShow, richTextValue, initialValue }) {
           indicator={<Loading3QuartersOutlined style={{ fontSize: "48px" }} spin />}
           size="48" >
           <Editor
+            ref={editorRef}
             apiKey={apiKey}
             onInit={handleEditorInit}
             initialValue={initialValue}

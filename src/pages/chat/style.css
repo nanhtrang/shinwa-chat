@@ -70,7 +70,7 @@
 }
 
 .input-text {
-  width: 50%;
+  width: calc((100vw - 359px) / 2);
   background-color: rgb(226, 232, 240);
   padding: 8px 14px;
   border-radius: 8px;
@@ -117,7 +117,7 @@
 }
 
 .type-user .chat-message {
-  background-color: rgb(96 165 250) !important;
+  background-color: rgb(96 165 250);
   color: white;
 }
 
@@ -359,4 +359,16 @@ td strong {
 
 .bot-user svg {
   fill: #60a5fa;
+}
+
+.chat-message-file {
+  background-color: white !important;
+}
+
+.chat-message-file-icon {
+  background-color: #e2e8f0;
+}
+
+.ant-dropdown-menu-item {
+  padding: 0px !important;
 }

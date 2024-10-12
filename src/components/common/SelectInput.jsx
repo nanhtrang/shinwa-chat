@@ -6,7 +6,6 @@ import { LiaTimesSolid } from "react-icons/lia";
 function SelectInput({ removeOption, options, value, setValue }) {
   // Remove option from selected list
   const handleChange = (value) => {
-    debugger
     setValue(...value)
 
   };

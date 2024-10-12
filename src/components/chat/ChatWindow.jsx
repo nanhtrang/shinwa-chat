@@ -5,11 +5,12 @@ import PreviewModal from "../preview/PreviewModal";
 import ReactSvg from "../../assets/react.svg";
 import ChatWindowControl from "../chatUtils/ChatWindowControl";
 import {
+  FileZipOutlined,
   Loading3QuartersOutlined,
-  LoadingOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import SelectUtil from "../chatUtils/SelectUtil";
 
 function ChatWindow() {
   const TURN = {
@@ -19,6 +20,7 @@ function ChatWindow() {
   const MESSAGE_TYPE = {
     TEXT: "TEXT",
     TABLE: "TABLE",
+    FILE: "FILE",
   };
   const [message, setMessage] = useState(""); // State to hold the current message
   const [chat, setChat] = useState([]);
@@ -28,20 +30,33 @@ function ChatWindow() {
   const [initialText, setInitialText] = useState("");
   const [showModalPreview, setShowModalPreview] = useState(false);
   const [isGeneratingFile, setIsGeneratingFile] = useState(false);
+  const [files, setFiles] = useState([])
 
   const handleSend = () => {
-    if (message.trim() === "") {
+    if (message.trim() === "" && files.length === 0) {
       return;
     }
-    setChat([
-      ...chat,
-      {
+
+    const newMessages = [];
+
+    for (const file of files) {
+      newMessages.push({
+        turn: TURN.USER,
+        type: MESSAGE_TYPE.FILE,
+        file: file,
+      });
+    }
+
+    if (message.trim() !== "") {
+      newMessages.push({
         turn: TURN.USER,
         type: MESSAGE_TYPE.TEXT,
         text: message,
-      },
-    ]);
+      });
+    }
+    setChat([...chat, ...newMessages]);
     setMessage("");
+    setFiles([])
     setUserTurn(true);
   };
 
@@ -95,7 +110,7 @@ function ChatWindow() {
     } else {
       return true;
     }
-  }
+  };
 
   useEffect(() => {
     if (chatBoxRef.current) {
@@ -105,6 +120,28 @@ function ChatWindow() {
       });
     }
   }, [chat]);
+
+  function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return "0 Bytes";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = [
+      "Bytes",
+      "KiB",
+      "MiB",
+      "GiB",
+      "TiB",
+      "PiB",
+      "EiB",
+      "ZiB",
+      "YiB",
+    ];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  }
 
   useEffect(() => {
     if (isUserTurn === true) {
@@ -122,7 +159,12 @@ function ChatWindow() {
             type: MESSAGE_TYPE.TEXT,
             text: "bot rep here, this is a message from bot",
             tooltip: createTooltip("bot rep here, this is a message from bot"),
-          }
+          },
+          {
+            turn: TURN.BOT,
+            type: MESSAGE_TYPE.TEXT,
+            text: (<SelectUtil />),
+          },
         ]);
       }, 1000);
       setUserTurn(false);
@@ -148,8 +190,13 @@ function ChatWindow() {
                 className={`d-flex my-2 chat-message-container align-items-center ${item.turn}`}
               >
                 <Avatar
-                  className={`me-2 bot-avt ${item.turn === TURN.BOT && isShowAvatar(chat, index, item.turn) ? "" : "invisible"}`}
-                  icon={<SettingOutlined/>}
+                  className={`me-2 bot-avt ${
+                    item.turn === TURN.BOT &&
+                    isShowAvatar(chat, index, item.turn)
+                      ? ""
+                      : "invisible"
+                  }`}
+                  icon={<SettingOutlined />}
                 />
                 {item.type === MESSAGE_TYPE.TABLE && (
                   <div className="chat-message chat-message-with-table p-2 px-3">
@@ -157,6 +204,22 @@ function ChatWindow() {
                       className="w-100"
                       dangerouslySetInnerHTML={{ __html: item.text }}
                     ></div>
+                  </div>
+                )}
+                {item.type === MESSAGE_TYPE.FILE && (
+                  <div className="chat-message chat-message-file p-1 c-pointer">
+                    <div className="d-flex align-items-start">
+                      <div
+                        className="rounded chat-message-file-icon me-2 p-1 d-flex align-items-center justify-content-center"
+                        style={{ width: "53.5px", height: "53.5px" }}
+                      >
+                        <FileZipOutlined style={{ fontSize: "16px" }} />
+                      </div>
+                      <div className="p-2">
+                        <div className="fw-bold">{item.file.name}</div>
+                        <div style={{fontSize: 11}}>{formatBytes(item.file.size)}</div>
+                      </div>
+                    </div>
                   </div>
                 )}
                 {item.type === MESSAGE_TYPE.TEXT && item.tooltip && (
@@ -172,8 +235,12 @@ function ChatWindow() {
                   <div className="chat-message p-2 px-3">{item.text}</div>
                 )}
                 <Avatar
-                  className={`ms-2 bot-user ${item.turn === TURN.USER && isShowAvatar(chat, index, item.turn) ? "" : "invisible"
-                    }`}
+                  className={`ms-2 bot-user ${
+                    item.turn === TURN.USER &&
+                    isShowAvatar(chat, index, item.turn)
+                      ? ""
+                      : "invisible"
+                  }`}
                   icon={<UserOutlined />}
                 />
               </div>
@@ -193,6 +260,8 @@ function ChatWindow() {
             handleSend={handleSend}
             createInitTable={createInitTable}
             generateFile={generateFile}
+            files={files}
+            setFiles={setFiles}
           />
           <EditorModal
             initialValue={initialText}
