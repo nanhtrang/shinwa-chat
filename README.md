@@ -14,8 +14,8 @@ Follow these steps to get the project up and running on your local machine:
 
 1. Clone the repository:
    ```
-   git clone [repository-url]
-   cd toyota-shinwa-chatbot-ui
+   git clone https://git.vti.com.vn/toyota_shinwa_chatbot/chatbot-fe.git
+   cd chatbot-fe
    ```
 
 2. Install dependencies:

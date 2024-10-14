@@ -69,7 +69,7 @@ function SelectUtil() {
                   style={{ padding: "8px", cursor: "pointer" }}
                   onClick={() => handleKeyDown({ key: "Enter" })}
                 >
-                  <PlusOutlined /> Add "{searchValue}"
+                  <PlusOutlined /> Add &quot;{searchValue}&quot;
                 </div>
               )}
           </>
