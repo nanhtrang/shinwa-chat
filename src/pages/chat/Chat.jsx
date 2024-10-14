@@ -13,38 +13,77 @@ function Chat() {
   })
   const steps = [
     {
-      title: "Welcome to Chat",
-      description: "This is a chat application, take a tour to know more about it",
+      title: "チャットへようこそ",
+      description: "これはチャットアプリケーションです。ツアーに参加して詳細を確認してください。",
       target: () => document.querySelector(".header-box"),
+      nextButtonProps: {
+        children: '次',
+      },
     },
     {
-      title: "Recent Chat",
-      description: "This is a list of chat history",
+      title: "最近のチャット",
+      description: "これはチャット履歴のリストです",
       target: () => document.querySelector(".recent-chat"),
+      nextButtonProps: {
+        children: '次',
+      },
+      prevButtonProps: {
+        children: '戻る',
+      },
     },
     {
-      title: "Create new chat",
-      description: "Click on the button to create a new chat",
+      title: "新しいチャットを作成",
+      description: "新しいチャットを作成するにはこのボタンをクリックしてください",
       target: () => document.querySelector(".icon-create-new"),
+      nextButtonProps: {
+        children: '次',
+      },
+      prevButtonProps: {
+        children: '戻る',
+      },
     },
     {
-      title: "Create new or choose existing table",
-      description: "Click on the button to create a new or choose existing table",
+      title: "新しいテーブルを作成するか、既存のテーブルを選択してください",
+      description: "このボタンをクリックして新しいテーブルを作成するか、既存のテーブルを選択してください",
       target: () => document.querySelector(".ant-dropdown-trigger"),
+      nextButtonProps: {
+        children: '次',
+      },
+      prevButtonProps: {
+        children: '戻る',
+      },
     },
     {
-      title: "Send message here",
-      description: "Send file or text message here",
+      title: "ここにメッセージを送信",
+      description: "ここにメッセージを送信",
       target: () => document.querySelector(".send-box"),
+      nextButtonProps: {
+        children: '次',
+      },
+      prevButtonProps: {
+        children: '戻る',
+      },
     },
     {
-      title: "Generate pdf file",
-      description: "Click on the button to generate pdf file",
+      title: "PDFファイルを生成",
+      description: "このボタンをクリックしてPDFファイルを生成します",
       target: () => document.querySelector(".icon-generate-file"),
+      nextButtonProps: {
+        children: '次',
+      },
+      prevButtonProps: {
+        children: '戻る',
+      },
     },
     {
-      title: "Enjoy!",
-      description: "You have completed the tour, enjoy the app!",
+      title: "楽しむ!",
+      description: "ツアーは完了です。アプリをお楽しみください!",
+      nextButtonProps: {
+        children: '完全なツアー',
+      },
+      prevButtonProps: {
+        children: '戻る',
+      },
     },
   ]
 
@@ -59,10 +98,10 @@ function Chat() {
   return (
     <>
       <div className="d-flex chat-page">
-        <RecentChat createNewChat={() => {setShowModalCreateTable(true)}} />
+        <RecentChat createNewChat={() => { setShowModalCreateTable(true) }} />
         <ChatWindow />
         <ModalCreateNewChat show={showModalCreateChat} setShow={setShowModalCreateTable} createChat={createNewChat} />
-        <Tour open={showTour} onClose={() => {setShowTour(false)}} steps={steps} />
+        <Tour open={showTour} onClose={() => { setShowTour(false) }} steps={steps}/>
       </div>
     </>
   )
